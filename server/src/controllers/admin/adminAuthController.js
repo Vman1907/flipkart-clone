@@ -1,23 +1,23 @@
-const User = require("../../models/userModel");
+const Admin = require("../../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 exports.signup = (req, res) => {
-    User.findOne({ email: req.body.email.toLowerCase() })
+    Admin.findOne({ email: req.body.email.toLowerCase() })
         .then((user) => {
             if (user) {
-                res.status(200).json({
+                return res.status(200).json({
                     message: "admin already exist",
                 });
             } else {
                 const { firstName, lastName, email, password } = req.body;
-                User.create({
+                Admin.create({
                     firstName,
                     lastName,
                     email,
                     password,
                     userName: Math.random().toString(),
-                    role: 'admin'
+                    role: "admin",
                 })
                     .then((resp) => {
                         res.status(200).json({
@@ -35,11 +35,20 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
-    User.findOne({ email: req.body.email.toLowerCase() })
+    Admin.findOne({ email: req.body.email.toLowerCase() })
         .then((user) => {
-            if (bcrypt.compareSync(req.body.password, user.hash_password) && user.role === 'admin') {
+            if (!user) {
+                console.log("user not found");
+                return res.status(400).json({
+                    error: "user not found",
+                });
+            }
+            if (
+                bcrypt.compareSync(req.body.password, user.hash_password) &&
+                user.role === "admin"
+            ) {
                 const token = jwt.sign(
-                    { _id: user._id },
+                    { _id: user._id, role: user.role },
                     process.env.JWT_SECRET,
                     { expiresIn: "1h" }
                 );
@@ -59,23 +68,16 @@ exports.signin = (req, res) => {
                     },
                 });
             } else {
-                console.log("some error");
+                console.log("password invalid");
                 res.status(400).json({
-                    error: "some error",
+                    error: "password invalid",
                 });
             }
         })
         .catch((err) => {
+            console.log(err);
             res.status(400).json({
                 err,
             });
         });
-};
-
-exports.requireSignin = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(user);
-    req.user = user;
-    next();
 };

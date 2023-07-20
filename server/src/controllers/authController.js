@@ -1,8 +1,10 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
 
 exports.signup = (req, res) => {
+
     User.findOne({ email: req.body.email.toLowerCase() })
         .then((user) => {
             if (user) {
@@ -58,9 +60,9 @@ exports.signin = (req, res) => {
                     },
                 });
             } else {
-                console.log("some error");
+                console.log("password invalid");
                 res.status(400).json({
-                    error: "some error",
+                    error: "password invalid",
                 });
             }
         })
@@ -69,12 +71,4 @@ exports.signin = (req, res) => {
                 err,
             });
         });
-};
-
-exports.requireSignin = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(user);
-    req.user = user;
-    next();
 };
