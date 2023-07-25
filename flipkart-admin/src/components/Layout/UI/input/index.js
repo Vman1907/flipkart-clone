@@ -19,8 +19,6 @@ export const Input = (props) => {
         {props.errorMessage}
       </Form.Text>
     </Form.Group>
-
    )
-
  }
  export default Input
