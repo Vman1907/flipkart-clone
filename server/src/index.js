@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use("/api", userRoutes);
 app.use("/api", adminRoutes);
 app.use('/api', categoryRoute);
-app.use('./api', adminDeleteRoute);git 
+app.use('./api', adminDeleteRoute);
 
 //db connection
 mongoose
