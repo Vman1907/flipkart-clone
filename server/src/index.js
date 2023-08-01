@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const { default: mongoose } = require("mongoose");
 const userRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/admin/adminAuthRoutes");
-const categoryRoute = require('./routes/categoryRoute')
+const categoryRoute = require('./routes/categoryRoute');
+const productRoute = require('./routes/productRoute');
 const adminDeleteRoute=require('./routes/admin/adminDeleteRoutes');
 //enviroment variable or constant
 env.config();
@@ -21,7 +22,8 @@ app.use(bodyParser.json());
 app.use("/api", userRoutes);
 app.use("/api", adminRoutes);
 app.use('/api', categoryRoute);
-app.use('./api', adminDeleteRoute);
+app.use('/api', adminDeleteRoute);
+app.use("/api", productRoute);
 
 //db connection
 mongoose
