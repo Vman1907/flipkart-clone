@@ -3,12 +3,12 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require,
+      required: true,
       trim: true,
     },
     slug: {
       type: String,
-      require,
+      required: true,
       unique: true,
     },
     price: { type: Number, require: true },
@@ -19,6 +19,10 @@ const productSchema = new mongoose.Schema(
     },
     offer: {
       type: Number,
+    },
+    quantity:{
+        type:Number,
+        required:true,
     },
     productPictures: [
       {
@@ -34,11 +38,14 @@ const productSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required:true,
       updatedAt: Date,
     },
+    
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
+      required:true,
     },
   },
   { timestamps: true }
