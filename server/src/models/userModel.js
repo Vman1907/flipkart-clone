@@ -25,14 +25,6 @@ const userSchema = new mongoose.Schema(
             index: true,
             lowercase: true,
         },
-        userName: {
-            type: String,
-            require,
-            trim: true,
-            unique: true,
-            index: true,
-            lowercase: true,
-        },
         hash_password: {
             type: String,
             require,

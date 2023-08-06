@@ -20,9 +20,9 @@ const productSchema = new mongoose.Schema(
     offer: {
       type: Number,
     },
-    quantity:{
-        type:Number,
-        required:true,
+    quantity: {
+      type: Number,
+      required: true,
     },
     productPictures: [
       {
@@ -38,14 +38,14 @@ const productSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required:true,
+      required: true,
       updatedAt: Date,
     },
-    
+
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required:true,
+      required: true,
     },
   },
   { timestamps: true }

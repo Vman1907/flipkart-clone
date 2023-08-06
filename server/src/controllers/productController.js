@@ -1,4 +1,4 @@
-const Product = require("../models/product");
+const Product = require("../models/productModel");
 const multer = require("multer");
 const shortid = require("shortid");
 const slugify = require("slugify");
@@ -51,7 +51,7 @@ exports.createProduct = (req, res) =>
     createdBy: req.user._id,
   })
     .then((resp) => {
-      res.status(201).json({ message: "Product created successfully" });
+      res.status(201).json({resp, message: "Product created successfully" });
       console.log(resp);
     })
     .catch((err) => {
