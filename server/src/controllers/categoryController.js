@@ -1,5 +1,5 @@
 const { default: slugify } = require("slugify");
-const Category = require("../models/category");
+const Category = require("../models/categoryModel");
 
 function createCategory(categories, parentId = null) {
     const categoryList = [];
@@ -15,19 +15,26 @@ function createCategory(categories, parentId = null) {
             _id: cate._id,
             name: cate.name,
             slug: cate.slug,
+            categoryImage: cate.categoryImage,
             children: createCategory(categories, cate._id.toString()),
         });
     }
 
     return categoryList;
 }
-
 exports.createCategory = (req, res) => {
-    Category.create({
-        name: req.body.name,
-        slug: slugify(req.body.name),
-        parentId: req.body.parentId ? req.body.parentId : undefined,
-    })
+    
+let newCategory={
+    name: req.body.name,
+    slug: slugify(req.body.name),
+    parentId: req.body.parentId ? req.body.parentId : undefined,
+};
+if(req.file)
+{
+    newCategory.categoryImage= process.env.API+'/public/'+req.file.filename;
+}
+console.log(newCategory);
+    Category.create( newCategory)
         .then((resp) => {
             res.status(201).json({ message: "category created successfully" });
             console.log(resp);

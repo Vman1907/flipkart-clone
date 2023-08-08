@@ -38,9 +38,15 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
     User.findOne({ email: req.body.email.toLowerCase() })
         .then((user) => {
+            if (!user) {
+                console.log("user not found");
+                return res.status(400).json({
+                    error: "user not found",
+                });
+            }
             if (bcrypt.compareSync(req.body.password, user.hash_password)) {
                 const token = jwt.sign(
-                    { _id: user._id },
+                    { _id: user._id , role: user.role},
                     process.env.JWT_SECRET,
                     { expiresIn: "1h" }
                 );
