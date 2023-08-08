@@ -1,23 +1,39 @@
-import React from "react";
+import Reac, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Input from "../../components/Layout/UI/input";
-import { login } from "../../redux/actions";
+import { isUserLoggedIn, login } from "../../redux/actions";
 import { Container, Form, Row, Button, Col } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+// import {state} from '../../redux/reducers/auth.reducers'
+
 /**
  * @author
  * @function Signin
  **/
 
 export const Signin = (props) => {
-
-  const dispatch=useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(auth," Inside signin Page");
+    if (!auth.authenticate) 
+    dispatch(isUserLoggedIn);
+  }, []);
 
   const userLogin = (e) => {
     e.preventDefault();
-    const user = { email: "Varshmaan2", password: "Varshmaan2" };
+    const user = { email, password };
     dispatch(login(user));
   };
+  console.log(auth.authenticate," Inside signin Page");
+
+  if (auth.authenticate) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <Layout>
       <Container>
@@ -27,17 +43,17 @@ export const Signin = (props) => {
               <Input
                 label="Email"
                 placeholder="Email"
-                value=""
+                value={email}
                 type="email"
-                onChange={() => {}}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <Input
                 label="Password"
                 placeholder="Password"
-                value=""
+                value={password}
                 type="password"
-                onChange={() => {}}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <Button variant="primary" type="submit">
