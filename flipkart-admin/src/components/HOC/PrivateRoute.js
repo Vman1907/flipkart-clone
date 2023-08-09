@@ -1,7 +1,5 @@
 import React from "react";
-import { Home } from "../../containers/Home";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { Signin } from "../../containers/Signin";
+import { Navigate } from "react-router-dom";
 const PrivateRoute = (props) => {
   console.log("Inside Private Route");
   const token = window.localStorage.getItem("token");
