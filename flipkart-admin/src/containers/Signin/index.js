@@ -18,12 +18,7 @@ export const Signin = (props) => {
   const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(auth," Inside signin Page");
-    if (!auth.authenticate) 
-    dispatch(isUserLoggedIn);
-  }, []);
-
+  
   const userLogin = (e) => {
     e.preventDefault();
     const user = { email, password };

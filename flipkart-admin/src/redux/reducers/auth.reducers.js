@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { authConstants } from "../actions/constants";
 
 const initState = {
@@ -11,7 +12,7 @@ const initState = {
   authenticate: false,
   authenticating: false,
 };
-export default (state = {}, action) => {
+export default (state = initState, action) => {
   console.log(action);
 
   switch (action.type) {
@@ -27,9 +28,19 @@ export default (state = {}, action) => {
         user: action.payload.user,
         token: action.payload.token,
         authenticate: true,
-        authenticating:false
+        authenticating: false,
       };
       break;
+      case authConstants.LOGOUT_REQUEST:
+      state={
+        ...initState
+      }
+      break;
+    default:
+      console.log("Something went wrong");
+      break;
   }
+  localStorage.setItem("auth", JSON.stringify(state));
+  console.log(localStorage, "inside reducer");
   return state;
 };

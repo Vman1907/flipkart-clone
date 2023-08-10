@@ -1,18 +1,26 @@
-import React from 'react'
-import Layout from '../../components/Layout'
-import { Button, Container } from 'react-bootstrap'
-import '../../../src/index.css'
-import { alignPropType } from 'react-bootstrap/esm/types'
+import React from "react";
+import Layout from "../../components/Layout";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import "../../../src/index.css";
+import { alignPropType } from "react-bootstrap/esm/types";
+import './style.css';
 
 /**
-* @author
-* @function Home
-**/
+ * @author
+ * @function Home
+ **/
 
 export const Home = (props) => {
-  return(
+  return (
     <Layout>
-          <div class="jumbotron" style={{margin:'5rem',backgroundColor:'white'  }}>
+      <Container fluid>
+        <Row>
+          <Col md={2} className="sidebar">SideBar</Col>
+          <Col md={10} style={{marginLeft:'auto'}}>Container</Col>
+        </Row>
+      </Container>
+
+      {/* <div class="jumbotron" style={{margin:'5rem',backgroundColor:'white'  }}>
           <div class="container-fluid">
             <div class="row-fluid">
               
@@ -20,8 +28,7 @@ export const Home = (props) => {
                 <p style={{marginBottom:'50px'}}>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
             </div>
             </div>
-          </div> 
+          </div>  */}
     </Layout>
-   )
-
- }
+  );
+};
