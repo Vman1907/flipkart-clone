@@ -21,6 +21,7 @@ router.post(
     isRequestValidated,
     adminController.signup
 );
+router.post("/admin/signout", isRequestValidated, adminController.signout);
 
 router.post("/profile", requireSignin, (req, res) => {
     res.status(200).json({

@@ -5,13 +5,15 @@ const bodyParser = require("body-parser");
 const { default: mongoose } = require("mongoose");
 const userRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/admin/adminAuthRoutes");
-const categoryRoute = require('./routes/categoryRoute');
-const productRoute = require('./routes/productRoute');
-const cartRoute=require('./routes/cartRoute');
-const adminDeleteRoute=require('./routes/admin/adminDeleteRoutes');
-const path=require('path');
+const categoryRoute = require("./routes/categoryRoute");
+const productRoute = require("./routes/productRoute");
+const cartRoute = require("./routes/cartRoute");
+const adminDeleteRoute = require("./routes/admin/adminDeleteRoutes");
+var cors = require("cors");
+const path = require("path");
 //enviroment variable or constant
 env.config();
+app.use(cors());
 
 app.use(
     bodyParser.urlencoded({
@@ -20,11 +22,11 @@ app.use(
 );
 
 app.use(bodyParser.json());
-app.use("/public",express.static(path.join(__dirname,'uploads')));
+app.use("/public", express.static(path.join(__dirname, "uploads")));
 app.use("/api", userRoutes);
 app.use("/api", adminRoutes);
-app.use('/api', categoryRoute);
-app.use('/api', adminDeleteRoute);
+app.use("/api", categoryRoute);
+app.use("/api", adminDeleteRoute);
 app.use("/api", productRoute);
 app.use("/api", cartRoute);
 

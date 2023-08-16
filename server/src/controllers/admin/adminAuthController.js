@@ -55,6 +55,7 @@ exports.signin = (req, res) => {
 
                 const { _id, firstName, lastName, email, role, fullName } =
                     user;
+                res.cookie = ("token", token, { expiresIn: "1h" });
 
                 res.status(200).json({
                     token,
@@ -80,4 +81,10 @@ exports.signin = (req, res) => {
                 err,
             });
         });
+};
+
+exports.signout = (req, res) => {
+    console.log(res);
+    res.clearCookie("token");
+    res.status(200).json({ message: "signout successfully" });
 };
