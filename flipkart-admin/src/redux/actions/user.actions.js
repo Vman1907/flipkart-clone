@@ -7,9 +7,10 @@ export const signup=(user)=> {
         const res=await axiosInstance.post('/admin/signup',{
             ...user
         });
-        if(res.status===201)
+        localStorage.setItem("res",JSON.stringify(res))
+        if(res.status===200)
         {
-            const {message } =res.data;
+            const {message } =res;
             dispatch({
                 type:userConstants.USER_REGISTER_SUCCESS,
                 payload:{

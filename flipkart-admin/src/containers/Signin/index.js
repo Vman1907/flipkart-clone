@@ -24,7 +24,6 @@ export const Signin = (props) => {
     const user = { email, password };
     dispatch(login(user));
   };
-  console.log(auth.authenticate," Inside signin Page");
 
   if (auth.authenticate) {
     return <Navigate to={"/"} />;

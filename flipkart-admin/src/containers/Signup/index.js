@@ -18,24 +18,27 @@ export const Signup = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
-  const user=useSelector((state)=>state.user)
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const userSignUp=(e)=>{
+  const userSignUp = (e) => {
     e.preventDefault();
 
-    const user={
-      firstName,lastName,email,password
-    }
-        dispatch(signup(user));
-  }
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    dispatch(signup(user));
+  };
 
   if (auth.authenticate) {
     return <Navigate to={"/"} />;
   }
 
-  if(user.loading){
-    return <p>Loading...!</p>
+  if (user.loading) {
+    return <p>Loading...!</p>;
   }
   return (
     <Layout>
@@ -60,7 +63,9 @@ export const Signup = (props) => {
                     placeholder="Last Name"
                     value={lastName}
                     type="text"
-                    onChange={(e) => {setLastName(e.target.value)}}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
                   />
                 </Col>
               </Row>
@@ -70,7 +75,9 @@ export const Signup = (props) => {
                 placeholder="Email"
                 value={email}
                 type="email"
-                onChange={(e) => {setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
 
               <Input
@@ -78,7 +85,9 @@ export const Signup = (props) => {
                 placeholder="Password"
                 value={password}
                 type="password"
-                onChange={(e) => {setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
 
               <Button variant="primary" type="submit" onClick={userSignUp}>
