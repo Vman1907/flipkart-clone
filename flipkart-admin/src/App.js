@@ -14,7 +14,6 @@ function App() {
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log(auth, " Inside signin Page");
     if (!auth.authenticate) dispatch(isUserLoggedIn());
   }, []);
 

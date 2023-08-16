@@ -14,7 +14,6 @@ export const Header = (props) => {
   const logout =()=>{
     dispatch(signout());
   }
-  console.log(auth);
   const renderLoggedinLinks = () => {
     return (
       <Nav>
