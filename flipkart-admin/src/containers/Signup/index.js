@@ -37,6 +37,13 @@ export const Signup = (props) => {
   if(user.loading){
     return <p>Loading...!</p>
   }
+  // if(user.success)
+  // {
+  //   console.log("Inside successful Signup");
+  //    <Navigate to={"/signin"} />;
+  //    return;
+
+  // }
   return (
     <Layout>
       <Container>

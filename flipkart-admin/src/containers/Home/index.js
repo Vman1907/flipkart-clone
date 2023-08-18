@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Nav, NavLink, Row } from "react-bootstrap";
 import "../../../src/index.css";
 import { alignPropType } from "react-bootstrap/esm/types";
-import './style.css';
+import "./style.css";
 
 /**
  * @author
@@ -12,13 +12,8 @@ import './style.css';
 
 export const Home = (props) => {
   return (
-    <Layout>
-      <Container fluid>
-        <Row>
-          <Col md={2} className="sidebar">SideBar</Col>
-          <Col md={10} style={{marginLeft:'auto'}}>Container</Col>
-        </Row>
-      </Container>
+    <Layout sidebar>
+        Home
 
       {/* <div class="jumbotron" style={{margin:'5rem',backgroundColor:'white'  }}>
           <div class="container-fluid">

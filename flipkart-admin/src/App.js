@@ -7,14 +7,17 @@ import "../src/";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./redux/actions";
-import {Home } from './containers/Home';
+import { Home } from "./containers/Home";
+import { Test } from "./containers/TestUpload";
+import { Products } from "./containers/Products";
+import { Orders } from "./containers/Orders";
+import { Category } from "./containers/Category";
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log(auth, " Inside signin Page");
     if (!auth.authenticate) dispatch(isUserLoggedIn());
   }, []);
 
@@ -31,8 +34,36 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              {" "}
+              <Products/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/category"
+          element={
+            <PrivateRoute>
+              {" "}
+              <Category/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute>
+              {" "}
+              <Orders/>
+            </PrivateRoute>
+          }
+        />
         <Route path="/signin" exact element={<Signin />} />
         <Route path="/signup" exact element={<Signup />} />
+        <Route path="/upload" exact element={<Test />} />
       </Routes>
     </div>
   );

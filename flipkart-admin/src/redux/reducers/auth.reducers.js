@@ -13,7 +13,7 @@ const initState = {
   authenticating: false,
 };
 export default (state = initState, action) => {
-  console.log(action);
+  // console.log(action);
 
   switch (action.type) {
     case authConstants.LOGIN_REQUIEST:
@@ -37,10 +37,8 @@ export default (state = initState, action) => {
       }
       break;
     default:
-      console.log("Something went wrong");
       break;
   }
   localStorage.setItem("auth", JSON.stringify(state));
-  console.log(localStorage, "inside reducer");
   return state;
 };

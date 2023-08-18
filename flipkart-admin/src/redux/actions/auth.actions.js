@@ -2,7 +2,6 @@ import axiosInstance from "../../helpers/axios";
 import { authConstants } from "./constants"
 
 export const login=(user)=> {
-    console.log(user);
     return async (dispatch)=>{
         dispatch({type: authConstants.LOGIN_REQUIEST});
         const res=await axiosInstance.post('/admin/signin',{
@@ -60,5 +59,6 @@ export const signout=()=>{
         dispatch({
             type: authConstants.LOGOUT_REQUEST
         });
+        
     }
 }

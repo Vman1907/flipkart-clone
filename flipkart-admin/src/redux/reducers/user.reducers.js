@@ -4,22 +4,22 @@ const initState = {
   error: null,
   message: "",
   loading: false,
+  // success: false,
 };
-export default (state = initState, action) => {
-    console.log(action);
+const users= (state = initState, action) => {
   switch (action.type) {
     case userConstants.USER_REGISTER_REQUEST:
-      state = { ...state, loading: true };
+      state = { ...state, loading: true, /*{success: false}*/ };
       break;
     case userConstants.USER_REGISTER_SUCCESS:
-      state = { ...state, loading: false, message: action.payload.message };
+      state = { ...state, loading: false,/*success:true,*/ message: action.payload.message };
       break;
-      case userConstants.USER_REGISTER_FAILURE:
-        state = { ...state, loading: false, error: action.payload.error };
-        break;
+    case userConstants.USER_REGISTER_FAILURE:
+      state = { ...state,/*success:false,*/ loading: false, error: action.payload.error };
+      break;
     default:
-      console.log("Something went wrong");
       break;
   }
   return state;
 };
+export default users
