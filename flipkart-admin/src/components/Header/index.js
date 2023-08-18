@@ -10,15 +10,17 @@ import { signout } from "../../redux/actions/auth.actions";
 
 export const Header = (props) => {
   const auth = useSelector((state) => state.auth);
-  const dispatch= useDispatch();
-  const logout =()=>{
+  const dispatch = useDispatch();
+  const logout = () => {
     dispatch(signout());
-  }
+  };
   const renderLoggedinLinks = () => {
     return (
       <Nav>
         <li className="nav-item">
-          <span className="nav-link" onClick={logout}>Signout</span>
+          <span className="nav-link" onClick={logout}>
+            Signout
+          </span>
         </li>
       </Nav>
     );
@@ -34,6 +36,12 @@ export const Header = (props) => {
         <li className="nav-item">
           <NavLink to="/signup" className="nav-link">
             Signup
+          </NavLink>
+        </li>
+        
+        <li className="nav-item">
+          <NavLink to="/upload" className="nav-link">
+            Upload
           </NavLink>
         </li>
       </Nav>
@@ -52,8 +60,11 @@ export const Header = (props) => {
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto"></Nav>
-          {auth.authenticate ? renderLoggedinLinks() : renderNonLoggedinLinks()}
+          <Nav className="ms-auto ">
+            {auth.authenticate
+              ? renderLoggedinLinks()
+              : renderNonLoggedinLinks()}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
