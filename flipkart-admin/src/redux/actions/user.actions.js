@@ -23,7 +23,26 @@ export const signup = (user) => {
           type: userConstants.USER_REGISTER_FAILURE,
           payload: { error: res.data.error },
         });
-      }
+        localStorage.setItem("res",JSON.stringify(res))
+        if(res.status===200)
+        {
+            const {message } =res;
+            dispatch({
+                type:userConstants.USER_REGISTER_SUCCESS,
+                payload:{
+                    message
+                }
+            });
+        }
+        else{
+            if(res.status===400)
+            {
+                dispatch({
+                    type: userConstants.USER_REGISTER_FAILURE,
+                    payload: {error:res.data.error}
+                })
+            }
+        }
     }
   };
 };
