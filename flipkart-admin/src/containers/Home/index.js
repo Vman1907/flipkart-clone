@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
 import { Button, Col, Container, Nav, NavLink, Row } from "react-bootstrap";
 import "../../../src/index.css";
@@ -11,8 +11,13 @@ import "./style.css";
  **/
 
 export const Home = (props) => {
+
+  useEffect(()=>{
+    props.setActive(1)
+  })
+
   return (
-    <Layout sidebar>
+    <Layout active={props.active} sidebar>
         Home
 
       {/* <div class="jumbotron" style={{margin:'5rem',backgroundColor:'white'  }}>

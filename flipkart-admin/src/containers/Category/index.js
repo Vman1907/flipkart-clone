@@ -37,6 +37,9 @@ export const Category = (props) => {
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);
+  useEffect(() => {
+    props.setActive(2);
+  });
   const renderCategories = (allCategories) => {
     let categories = [];
     for (let category of allCategories) {
@@ -61,7 +64,7 @@ export const Category = (props) => {
     return options;
   };
   return (
-    <Layout sidebar>
+    <Layout active={props.active} sidebar>
       <Container>
         <Row>
           <Col md={12}>

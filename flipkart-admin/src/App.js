@@ -4,7 +4,7 @@ import { Signin } from "./containers/Signin";
 import { Signup } from "./containers/Signup";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import "../src/";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./redux/actions";
 import { Home } from "./containers/Home";
@@ -21,6 +21,8 @@ function App() {
     if (!auth.authenticate) dispatch(isUserLoggedIn());
   }, []);
 
+  const [active,setActive] = useState(1)
+
   return (
     <div className="App">
       <Routes>
@@ -30,7 +32,7 @@ function App() {
           element={
             <PrivateRoute>
               {" "}
-              <Home />
+              <Home setActive={setActive} active={active} />
             </PrivateRoute>
           }
         />
@@ -39,7 +41,7 @@ function App() {
           element={
             <PrivateRoute>
               {" "}
-              <Products/>
+              <Products setActive={setActive} active={active}/>
             </PrivateRoute>
           }
         />
@@ -48,7 +50,7 @@ function App() {
           element={
             <PrivateRoute>
               {" "}
-              <Category/>
+              <Category setActive={setActive} active={active}/>
             </PrivateRoute>
           }
         />
@@ -57,7 +59,7 @@ function App() {
           element={
             <PrivateRoute>
               {" "}
-              <Orders/>
+              <Orders setActive={setActive} active={active}/>
             </PrivateRoute>
           }
         />

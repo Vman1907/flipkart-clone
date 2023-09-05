@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../../components/Layout'
 
 /**
@@ -7,8 +7,13 @@ import Layout from '../../components/Layout'
 **/
 
 export const Products = (props) => {
+
+  useEffect(()=>{
+    props.setActive(3)
+  })
+
   return(
-    <Layout sidebar>
+    <Layout active={props.active} sidebar>
         products
     </Layout>
    )
