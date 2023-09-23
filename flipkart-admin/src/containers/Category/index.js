@@ -16,6 +16,13 @@ export const Category = (props) => {
   const [categoryImage, setCategoryImage] = useState("");
 
   const handleClose = () => {
+    setCategoryName("");
+    setparentCategoryId("");
+    setCategoryImage("");
+    setShow(false);
+  };
+
+  const handleSubmit = () => {
     const form = new FormData();
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
@@ -81,17 +88,19 @@ export const Category = (props) => {
         </Row>
       </Container>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onSubmit={handleSubmit} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Input
+            label="Name"
             value={categoryName}
-            placeholder={"Caategory Name"}
+            placeholder={"Category Name"}
             onChange={(e) => setCategoryName(e.target.value)}
           />
           <select
+            label="Parent Category"
             value={parentCategoryId}
             className="form-control"
             onChange={(e) => setparentCategoryId(e.target.value)}
@@ -104,6 +113,7 @@ export const Category = (props) => {
             ))}
           </select>
           <input
+            label="Image"
             type="file"
             name="categoryImage"
             onChange={handleCategoryImage}
@@ -113,7 +123,7 @@ export const Category = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>
