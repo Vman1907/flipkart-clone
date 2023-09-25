@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import {  Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addCategory, getAllCategory } from "../../redux/actions";
+import { addCategory } from "../../redux/actions";
 import Input from "../../components/Layout/UI/input";
+import { NewModal } from "../../components/Layout/UI/Modal";
 /**
  * @author
  * @function Category
@@ -12,7 +13,7 @@ import Input from "../../components/Layout/UI/input";
 export const Category = (props) => {
   const [show, setShow] = useState(false);
   const [categoryName, setCategoryName] = useState("");
-  const [parentCategoryId, setparentCategoryId] = useState("");
+  const [parentCategoryId, setparentCategoryId] = useState();
   const [categoryImage, setCategoryImage] = useState("");
 
   const handleClose = () => {
@@ -25,9 +26,12 @@ export const Category = (props) => {
   const handleSubmit = () => {
     const form = new FormData();
     form.append("name", categoryName);
-    form.append("parentId", parentCategoryId);
+      form.append("parentId", parentCategoryId);
     form.append("categoryImage", categoryImage);
     dispatch(addCategory(form));
+    setCategoryName("");
+    setparentCategoryId("");
+    setCategoryImage("");
     // const cat = {
     //   categoryName,
     //   parentCategoryId,
@@ -37,13 +41,12 @@ export const Category = (props) => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+
   const handleCategoryImage = (e) => setCategoryImage(e.target.files[0]);
 
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCategory());
-  }, []);
+
   useEffect(() => {
     props.setActive(2);
   });
@@ -88,12 +91,13 @@ export const Category = (props) => {
         </Row>
       </Container>
 
-      <Modal show={show} onSubmit={handleSubmit} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
+      <NewModal
+        show={show}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        modalTitle="Add New Category">
+
+        <Input
             label="Name"
             value={categoryName}
             placeholder={"Category Name"}
@@ -118,16 +122,9 @@ export const Category = (props) => {
             name="categoryImage"
             onChange={handleCategoryImage}
           ></input>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      </NewModal>
+      
     </Layout>
   );
 };

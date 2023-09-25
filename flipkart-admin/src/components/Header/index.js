@@ -49,6 +49,7 @@ export const Header = (props) => {
   };
   return (
     <Navbar
+      fixed="top"
       collapseOnSelect
       expand="lg"
       className="bg-body-tertiary"

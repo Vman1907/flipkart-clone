@@ -6,12 +6,13 @@ import PrivateRoute from "./components/HOC/PrivateRoute";
 import "../src/";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserLoggedIn } from "./redux/actions";
+import {  isUserLoggedIn } from "./redux/actions";
 import { Home } from "./containers/Home";
 import { Test } from "./containers/TestUpload";
 import { Products } from "./containers/Products";
 import { Orders } from "./containers/Orders";
 import { Category } from "./containers/Category";
+import { getInitialData } from "./redux/actions/initialData.action";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +20,9 @@ function App() {
 
   useEffect(() => {
     if (!auth.authenticate) dispatch(isUserLoggedIn());
-  }, []);
+  },
+  dispatch(getInitialData())
+  , []);
 
   const [active,setActive] = useState(1)
 

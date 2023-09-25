@@ -35,12 +35,13 @@ exports.createCategory = (req, res) => {
   }
   console.log(newCategory);
   Category.create(newCategory)
-    .then((res) => {
+    .then((resp) => {
       res.status(201).json({ message: "category created successfully" });
-      console.log(res);
+      console.log(resp);
     })
     .catch((err) => {
-      res.status(400).json({ err });
+      console.log(err);
+      res.status(400).json( err );
     });
 };
 

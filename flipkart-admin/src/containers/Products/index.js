@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap";
 import Input from "../../components/Layout/UI/input";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "../../redux/actions/products.actions";
-
+import { NewModal } from "../../components/Layout/UI/Modal";
 /**
  * @author
  * @function Products
@@ -22,6 +22,7 @@ export const Products = (props) => {
   const [productPictures, setProductPictures] = useState("");
   const [show, setShow] = useState(false);
   const category = useSelector((state) => state.category);
+  const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const handleClose = () => {
     console.log("Inside handleclose");
@@ -63,6 +64,53 @@ export const Products = (props) => {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+  const renderProductsTable = () => {
+    var counter=1;
+    return (
+      <Table responsive="sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Description</th>
+            <th>Product Pictures</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {
+          product.products.length > 0 ? (
+            product.products.map((product) => (
+              <tr key={product._id}>
+                <td>{counter++}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.quantity}</td>
+                <td>{product.description}</td>
+                <td>---</td>
+                <td>---</td>
+              </tr>
+            )
+            )
+            )
+           : (
+            <tr>
+              <td>2</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+              <td>Table cell</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    );
+  };
 
   return (
     <Layout active={props.active} sidebar>
@@ -75,80 +123,75 @@ export const Products = (props) => {
             </div>
           </Col>
         </Row>
+        <Row>
+          <Col>{renderProductsTable()}</Col>
+        </Row>
       </Container>
 
-      <Modal show={show} onSubmit={handleSubmit} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            label={"Name"}
-            value={name}
-            placeholder={"Product Name"}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <Input
-            label={"Price"}
-            value={price}
-            placeholder={"Product Price"}
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-          />
-          <Input
-            label={"Quantity"}
-            value={quantity}
-            placeholder={"Product Quantity"}
-            onChange={(e) => {
-              setQuantity(e.target.value);
-            }}
-          />
-          <Input
-            label={"Description"}
-            value={description}
-            placeholder={"Product Description"}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          />
-          <select
-            label="Category"
-            value={categoryId}
-            className="form-control"
-            onChange={(e) => setCategoryId(e.target.value)}
-          >
-            <option>Select Category</option>
-            {createCategoryList(category.categories).map((option) => (
-              <option value={option.value} key={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+      <NewModal
+        show={show}
+        handleSubmit={handleSubmit}
+        handleClose={handleClose}
+        modalTitle="Add New Product"
+      >
+        <Input
+          label={"Name"}
+          value={name}
+          placeholder={"Product Name"}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <Input
+          label={"Price"}
+          value={price}
+          placeholder={"Product Price"}
+          onChange={(e) => {
+            setPrice(e.target.value);
+          }}
+        />
+        <Input
+          label={"Quantity"}
+          value={quantity}
+          placeholder={"Product Quantity"}
+          onChange={(e) => {
+            setQuantity(e.target.value);
+          }}
+        />
+        <Input
+          label={"Description"}
+          value={description}
+          placeholder={"Product Description"}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
+        <select
+          label="Category"
+          value={categoryId}
+          className="form-control"
+          onChange={(e) => setCategoryId(e.target.value)}
+        >
+          <option>Select Category</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
-          {productPictures.length > 0
-            ? productPictures.map((pic, index) => (
-                <div key={index}>{pic.name}</div>
-              ))
-            : console.log("Empty")}
+        {productPictures.length > 0
+          ? productPictures.map((pic, index) => (
+              <div key={index}>{pic.name}</div>
+            ))
+          : console.log("Empty")}
 
-          <input
-            type="file"
-            name="productPictures"
-            onChange={handleProductPictures}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <input
+          type="file"
+          name="productPictures"
+          onChange={handleProductPictures}
+        />
+      </NewModal>
     </Layout>
   );
 };
