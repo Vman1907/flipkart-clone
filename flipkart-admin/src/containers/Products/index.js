@@ -49,6 +49,19 @@ export const Products = (props) => {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
 
+  var parentName="Default";
+  const findCategoryName = (categoryId) => {
+    console.log("Inside findCategoryName, category id passed is " + categoryId);
+    createCategoryList(category.categories).map((parent) => {
+      if (parent.value === categoryId) {
+        console.log("Match found and is "+parent.name);
+        parentName=parent.name;
+      }
+      return parentName;
+    });
+  };
+  
+
   const handleSubmit = () => {
     const form = new FormData();
     form.append("name", name);
@@ -65,7 +78,7 @@ export const Products = (props) => {
   };
   const handleShow = () => setShow(true);
   const renderProductsTable = () => {
-    var counter=1;
+    var counter = 1;
     return (
       <Table responsive="sm">
         <thead>
@@ -80,31 +93,29 @@ export const Products = (props) => {
           </tr>
         </thead>
         <tbody>
-          
-          {
-          product.products.length > 0 ? (
+          {product.products.length > 0 ? (
             product.products.map((product) => (
+
               <tr key={product._id}>
+                {findCategoryName(product.category)}
                 <td>{counter++}</td>
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
                 <td>{product.description}</td>
                 <td>---</td>
-                <td>---</td>
+                <td>{ parentName}</td>
               </tr>
-            )
-            )
-            )
-           : (
+            ))
+          ) : (
             <tr>
-              <td>2</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
+              <td>1</td>
+              <td>Empty</td>
+              <td>Empty</td>
+              <td>Empty</td>
+              <td>Empty</td>
+              <td>Empty</td>
+              <td>Empty</td>
             </tr>
           )}
         </tbody>
