@@ -6,18 +6,20 @@ const { validationResult } = require("express-validator");
 exports.signup = (req, res) => {
 
     User.findOne({ email: req.body.email.toLowerCase() })
-        .then((user) => {
+        .then(async (user) => {
             if (user) {
                 res.status(200).json({
                     message: "user already exist",
                 });
             } else {
                 const { firstName, lastName, email, password } = req.body;
+                const hash_password=await bcrypt.hash(password, 10 );
+
                 User.create({
                     firstName,
                     lastName,
                     email,
-                    password,
+                    hash_password,
                     userName: Math.random().toString(),
                 })
                     .then((resp) => {

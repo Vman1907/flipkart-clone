@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import Input from "../../components/Layout/UI/input";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "../../redux/actions/products.actions";
@@ -21,6 +21,9 @@ export const Products = (props) => {
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState("");
   const [show, setShow] = useState(false);
+
+  const [productdetailModalShow, setProductdetailModalShow] = useState(false);
+
   const category = useSelector((state) => state.category);
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
@@ -49,18 +52,17 @@ export const Products = (props) => {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
 
-  var parentName="Default";
+  var parentName = "Default";
   const findCategoryName = (categoryId) => {
     console.log("Inside findCategoryName, category id passed is " + categoryId);
     createCategoryList(category.categories).map((parent) => {
       if (parent.value === categoryId) {
-        console.log("Match found and is "+parent.name);
-        parentName=parent.name;
+        console.log("Match found and is " + parent.name);
+        parentName = parent.name;
       }
       return parentName;
     });
   };
-  
 
   const handleSubmit = () => {
     const form = new FormData();
@@ -95,8 +97,7 @@ export const Products = (props) => {
         <tbody>
           {product.products.length > 0 ? (
             product.products.map((product) => (
-
-              <tr key={product._id}>
+              <tr onClick={showProductDetailsModal} key={product._id}>
                 {findCategoryName(product.category)}
                 <td>{counter++}</td>
                 <td>{product.name}</td>
@@ -104,7 +105,7 @@ export const Products = (props) => {
                 <td>{product.quantity}</td>
                 <td>{product.description}</td>
                 <td>---</td>
-                <td>{ parentName}</td>
+                <td>{parentName}</td>
               </tr>
             ))
           ) : (
@@ -123,22 +124,8 @@ export const Products = (props) => {
     );
   };
 
-  return (
-    <Layout active={props.active} sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Products</h3>
-              <button onClick={handleShow}>Add</button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>{renderProductsTable()}</Col>
-        </Row>
-      </Container>
-
+  const renderAddProductModal = () => {
+    return (
       <NewModal
         show={show}
         handleSubmit={handleSubmit}
@@ -203,6 +190,49 @@ export const Products = (props) => {
           onChange={handleProductPictures}
         />
       </NewModal>
+    );
+  };
+
+  const handleCloseProductDetailsModal = () => {
+    setProductdetailModalShow(false);
+  };
+
+  const showProductDetailsModal = (props) => {
+    console.log(product);
+    setProductdetailModalShow(true);
+  };
+
+  const renderProductDetailsModal = () => {
+    console.log("Render Product Details clicked");
+    return (
+      <NewModal
+        show={productdetailModalShow}
+        handleClose={handleCloseProductDetailsModal}
+        modalTitle="Product Details"
+        size="lg"
+      >
+        <p>Product Details Modal</p>
+      </NewModal>
+    );
+  };
+
+  return (
+    <Layout active={props.active} sidebar>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Products</h3>
+              <button onClick={handleShow}>Add</button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>{renderProductsTable()}</Col>
+        </Row>
+      </Container>
+      {renderAddProductModal()}
+      {renderProductDetailsModal()}
     </Layout>
   );
 };
