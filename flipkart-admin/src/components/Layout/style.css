@@ -33,3 +33,17 @@
 background-color: #333;
 color: #fff;
 } */
+
+
+@media screen and (max-width: 770px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar ul li a {float: left;        border-radius: 5px 5px 0px 0px;
+
+}
+
+    div.content {margin-left: 0;}
+  }
